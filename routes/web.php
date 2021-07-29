@@ -6,11 +6,9 @@ use App\Http\Controllers\accessController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\pizzasIngredientsController;
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('', [accessController::class, 'welcome']);
 
 Route::get('register', [accessController::class, 'register']) -> name('register');
 Route::post('register', [UserController::class, 'create']);
@@ -20,7 +18,18 @@ Route::post('login', [UserController::class, 'index']);
 
 Route::get('logout', function () { session()->forget('userID'); $info['desc'] = __('auth.logOutOk'); return view('auth.login', compact('info')); });
 
-Route::get('admin/pizza', [PizzaController::class, 'index']) -> name('logged');
+Route::prefix('admin/pizza')->group(function () {
+  Route::get('', [accessController::class, 'pizzas']) -> name('logged');
+  Route::get('new', [accessController::class, 'pizzaNew']);
+  Route::post('new', [PizzaController::class, 'store']);
+  Route::get('delete/{id}', [PizzaController::class, 'destroy']);
+  Route::prefix('ingredient/{id}')->group(function () {
+    Route::get('', [accessController::class, 'pizzaIngredients']);
+    Route::get('delete/{idI}', [pizzasIngredientsController::class, 'destroy']);
+    Route::get('new', [accessController::class, 'pizzaIngredientsAdd']);
+    Route::post('new', [pizzasIngredientsController::class, 'store']);
+  });
+});
 
 Route::prefix('admin/ingredient')->group(function () {
   Route::get('', [accessController::class, 'ingredients']);
@@ -31,5 +40,5 @@ Route::prefix('admin/ingredient')->group(function () {
 
 Route::get('test', function () { 
   // dd(App\Models\ingredient::all());
-  dD(App\Models\ingredient::_get());
+  dD(App\Models\pizzasIngredient::_get(2));
 });
