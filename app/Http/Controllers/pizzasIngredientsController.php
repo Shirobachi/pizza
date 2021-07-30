@@ -35,6 +35,10 @@ class pizzasIngredientsController extends Controller
      */
     public function store($id, Request $r)
     {
+      $r->validate([
+        'ingredient' => 'unique:pizzasIngredients'
+      ]);
+
       pizzasIngredient::addIngredient($id, $r->ingredient);
 
       return redirect(url(dirname(url()->current())));
