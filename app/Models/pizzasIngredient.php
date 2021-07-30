@@ -26,6 +26,9 @@ class pizzasIngredient extends Model
     }
 
     public static function addIngredient($id, $ingredient){
+      if(pizzasIngredient::where([['pizza', $id], ['ingredient', $ingredient]]) -> count() > 0)
+        return back()->withErrors(__('pizzasIngredient.ingredientExists'));
+
       pizzasIngredient::create(
         [
           'pizza' => $id,
