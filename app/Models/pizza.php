@@ -19,6 +19,8 @@ class pizza extends Model
       foreach (pizzasIngredient::_get($t->id) as $i)
         $t -> ingredients .= $i -> name . ", ";
       $t->ingredients = rtrim($t->ingredients, ', ');
+      if($t->ingredients == '')
+      $t->ingredients = __('common.noIngredients');
     }
 
     return $temp;
