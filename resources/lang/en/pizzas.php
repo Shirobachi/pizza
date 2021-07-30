@@ -7,7 +7,7 @@ return [
   'submit' => 'Add',
   'id' => '#',
   'ingredients' => 'Ingredients',
-  '' => '',
+  'titleNew' => 'New pizza...',
   '' => '',
 
 ];

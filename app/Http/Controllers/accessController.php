@@ -89,8 +89,9 @@ class accessController extends Controller
     if(session()->has('userID')){
       $data['body'] = pizzasIngredient::_get($id);
       $name = 'pizzasIngredient';
+      $title = 'Pizza\'s ingredients';
 
-      return view('admin.show', compact('name', 'data'));
+      return view('admin.show', compact('name', 'data', 'title'));
     }
     else{
       $info['desc'] = __('auth.401');
