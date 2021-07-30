@@ -21,8 +21,8 @@ class pizzasIngredient extends Model
         -> get();
     }
 
-    public static function _destroy($id, $idI){
-      pizzasIngredient::where('pizza', $id) -> where('ingredient', $idI) -> delete();
+    public static function _destroy($id){
+      pizzasIngredient::findOrFail($id) -> delete();
     }
 
     public static function addIngredient($id, $ingredient){

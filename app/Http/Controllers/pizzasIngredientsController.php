@@ -86,7 +86,7 @@ class pizzasIngredientsController extends Controller
      */
     public function destroy($id, $idI)
     {
-      pizzasIngredient::_destroy($id, $idI);
+      pizzasIngredient::_destroy($idI);
 
       return redirect(url() -> previous());
   
